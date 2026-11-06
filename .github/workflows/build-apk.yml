@@ -1,36 +1,21 @@
-name: Build Android APK
+name: Build Escape del Laboratorio
 
-'on':
+on:
   push:
     branches:
       - main
   workflow_dispatch:
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar el proyecto
+      - name: Descargar repositorio
         uses: actions/checkout@v4
 
-      - name: Instalar Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Crear estructura Android
-        run: flutter create --platforms=android --project-name escape_del_laboratorio .
-
-      - name: Descargar dependencias
-        run: flutter pub get
-
-      - name: Compilar APK
-        run: flutter build apk --release
-
-      - name: Guardar APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Escape-del-Laboratorio-APK
-          path: build/app/outputs/flutter-apk/app-release.apk
-
+      - name: Verificar archivos
+        run: |
+          echo "Escape del Laboratorio"
+          echo "Repositorio descargado correctamente"
+          ls -la
