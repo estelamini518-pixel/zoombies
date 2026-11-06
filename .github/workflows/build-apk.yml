@@ -1,4 +1,4 @@
-name: Build Escape del Laboratorio
+name: Escape del Laboratorio - APK
 
 on:
   push:
@@ -14,8 +14,29 @@ jobs:
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
-      - name: Verificar archivos
-        run: |
-          echo "Escape del Laboratorio"
-          echo "Repositorio descargado correctamente"
-          ls -la
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Crear configuracion Android
+        run: flutter create --platforms=android .
+
+      - name: Instalar dependencias
+        run: flutter pub get
+
+      - name: Compilar APK
+        run: flutter build apk --release
+
+      - name: Guardar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Escape-del-Laboratorio-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
